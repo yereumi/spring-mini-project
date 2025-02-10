@@ -6,6 +6,7 @@ import com.spring.common.domain.TimeBaseEntity;
 import com.spring.user.domain.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,7 +30,7 @@ public class Post extends TimeBaseEntity {
 
 	private String content;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userId",
 		nullable = false,
 		foreignKey = @ForeignKey(NO_CONSTRAINT))
