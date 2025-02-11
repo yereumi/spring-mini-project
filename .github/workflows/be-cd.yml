@@ -63,9 +63,9 @@ jobs:
         key: ${{ secrets.EC2_SSH }}
         port: ${{ secrets.PORT }}
         script: |
-            cd ${{ secrets.PROJECT_DIR }}
-            git pull origin main
-            fuser -k 8080/tcp || true
-            cp ./build/libs/*.jar app.jar
-            nohup java -jar -Dserver.port=${{ secrets.APP_PORT }} app.jar > app.log 2>&1 &
+          cd ${{ secrets.PROJECT_DIR }}
+          git pull origin main
+          fuser -k ${{ secrets.APP_PORT }}/tcp || true
+          cp ./build/libs/*.jar app.jar
+          nohup java -jar -Dserver.port=${{ secrets.APP_PORT }} app.jar > app.log 2>&1 &
   
