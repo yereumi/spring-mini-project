@@ -27,18 +27,10 @@
 name: Deploy Spring Boot to Amazon EC2
 
 on:
+  push:
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
-# env:
-#   # AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
-#   # ECR_REPOSITORY: MY_ECR_REPOSITORY           # set this to your Amazon ECR repository name
-#   ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
-#   ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
-#   ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
-#                                                # file, e.g. .aws/task-definition.json
-#   CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
 
 permissions:
   contents: read
@@ -62,7 +54,7 @@ jobs:
     - name: Build with Gradle
       run: |
         chmod +x gradlew
-        ./gradlew clean build -x test  # 테스트 생략하고 빌드
+        ./gradlew clean build -x test
 
     - name: Deploy to EC2 via SSH
       uses: appleboy/ssh-action@v0.1.6
