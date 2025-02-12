@@ -60,7 +60,7 @@ jobs:
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_SSH }}
+        key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: |
           cd ${{ secrets.PROJECT_DIR }}
