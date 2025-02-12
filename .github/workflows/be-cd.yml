@@ -72,12 +72,12 @@ jobs:
 
     steps:
       - name: Deploy to EC2 via SSH
-        uses: appleboy/ssh-action@v0.1.6
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_PORT }}
+#          port: ${{ secrets.EC2_PORT }}
           script: |
             sudo fuser -k -n tcp 8080 || true
             sudo nohup java -jar cdtest.jar > ./output.log 2>&1 &
