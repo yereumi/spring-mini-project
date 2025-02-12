@@ -1,0 +1,39 @@
+name: BE CI
+
+on: # workflow를 실행할 조건(이벤트) 정의
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs: # 실행할 작업 정의
+  build-and-test:
+    runs-on: ubuntu-latest # job이 실행될 환경 지정
+
+    steps: # job 내에서 실행될 개별 작업 정의
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+         cache-write-only: true
+
+      - name: Grant Execute Permission For Gradlew
+        run: chmod +x gradlew
+
+      - name: Build With Gradle
+        run: ./gradlew build
+
+      - name: Run Tests
+        run: ./gradlew test
