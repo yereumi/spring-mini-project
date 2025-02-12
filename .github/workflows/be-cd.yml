@@ -60,8 +60,12 @@ jobs:
       - name: Rename Build File
         run: mv ./build/libs/*SNAPSHOT.jar ./cdtest.jar
 
-      - name: Debug SSH Key
-        run: echo "${{ secrets.EC2_SSH_KEY }}" | wc -l
+      - name: Debug Secrets
+        run: |
+          echo "${{ secrets.EC2_HOST }}" | wc -l
+          echo "${{ secrets.EC2_USERNAME }}" | wc -l
+          echo "${{ secrets.EC2_SSH_KEY }}" | wc -l
+
 
       - name: Transfer Build File to EC2 via SCP
         uses: appleboy/scp-action@v0.1.4
