@@ -63,6 +63,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: ${{ secrets.EC2_PORT }}
         script: |
+          echo "APP_PORT: ${{ secrets.APP_PORT }}"
           cd ${{ secrets.PROJECT_DIR }}
           git pull origin main
           fuser -k ${{ secrets.APP_PORT }}/tcp || true
