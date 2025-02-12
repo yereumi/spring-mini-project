@@ -62,9 +62,9 @@ jobs:
 
       - name: Debug Secrets
         run: |
-          echo "${{ secrets.EC2_HOST }}" | wc -l
-          echo "${{ secrets.EC2_USERNAME }}" | wc -l
-          echo "${{ secrets.EC2_SSH_KEY }}" | wc -l
+          echo "EC2_HOST: '${{ secrets.EC2_HOST }}'"
+          echo "EC2_USERNAME: '${{ secrets.EC2_USERNAME }}'"
+          echo "EC2_SSH_KEY length: $(echo "${{ secrets.EC2_SSH_KEY }}" | wc -c)"
 
 
       - name: Transfer Build File to EC2 via SCP
