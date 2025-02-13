@@ -3,8 +3,12 @@ package com.spring.user.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.user.dto.request.RegisterUserRequest;
+import com.spring.user.dto.response.RegisterUserResponse;
 import com.spring.user.dto.response.UserSimpleResponse;
 import com.spring.user.dto.UserMapper;
 import com.spring.user.service.UserService;
@@ -22,4 +26,9 @@ public class UserController {
 		UserSimpleResponse response = userService.getUser(UserMapper.toUserSimpleRequest(userId));
 		return ResponseEntity.ok(response);
 	}
-}
+
+	@PostMapping()
+	public ResponseEntity<RegisterUserResponse> joinUser(@RequestBody RegisterUserRequest request) {
+		RegisterUserResponse response = userService.joinUser(request);
+		return ResponseEntity.ok(response);
+	}}

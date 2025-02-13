@@ -1,6 +1,11 @@
 package com.spring.user.dto;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.spring.user.domain.Role;
+import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.UserSimpleRequest;
+import com.spring.user.dto.response.RegisterUserResponse;
 import com.spring.user.dto.response.UserSimpleResponse;
 import com.spring.user.domain.User;
 
@@ -19,7 +24,25 @@ public class UserMapper {
 			user.getId(),
 			user.getEmail(),
 			user.getName(),
-			user.getRole().getRole();
-		)
+			user.getRole().getRole()
+		);
+	}
+
+	public static User toUser(RegisterUserRequest request, PasswordEncoder passwordEncoder) {
+		return User.of(
+			request.email(),
+			passwordEncoder.encode(request.password()),
+			request.name(),
+			Role.MEMBER
+		);
+	}
+
+	public static RegisterUserResponse toRegisterUserResponse(User savedUser) {
+		return new RegisterUserResponse(
+			savedUser.getId(),
+			savedUser.getEmail(),
+			savedUser.getName(),
+			savedUser.getRole().getRole()
+		);
 	}
 }
