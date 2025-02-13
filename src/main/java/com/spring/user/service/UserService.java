@@ -32,7 +32,7 @@ public class UserService {
 	public SimpleUserResponse getUser(SimpleUserRequest request) {
 		User findUser = findUser(request.userId());
 
-		return UserMapper.toUserSimpleResponse(findUser);
+		return UserMapper.toSimpleUserResponse(findUser);
 	}
 
 	@Transactional
@@ -50,7 +50,22 @@ public class UserService {
 
 		findUser.updateInfo(request.email(), request.name(), request.role());
 
-		return UserMapper.toUserSimpleResponse(findUser);
+		return UserMapper.toSimpleUserResponse(findUser);
+	}
+
+	@Transactional
+	public DeleteUserResponse deleteUser(DeleteUserRequest request) {
+		User findUser = findUser(request.userId());
+
+		userRepository.delete(findUser);
+		return UserMapper.toDeleteUserResponse();
+	}
+
+	@Transactional(readOnly = true)
+	public List<SimpleUserResponse> getUserAll() {
+		List<User> findUserAll = userRepository.findAll();
+
+		return UserMapper.toSimpleUserResponses(findUserAll);
 	}
 
 	private User findUser(Long userId) {
@@ -63,19 +78,5 @@ public class UserService {
 		if(userRepository.existsByEmail(changingEmail)) {
 			throw new BaseException(UserErrorCode.DUPLICATED_EMAIL);
 		}
-	}
-
-	@Transactional
-	public DeleteUserResponse deleteUser(DeleteUserRequest request) {
-		User findUser = findUser(request.userId());
-
-		userRepository.delete(findUser);
-		return UserMapper.toDeleteUserResponse();
-	}
-
-	public List<SimpleUserResponse> getUserAll() {
-		List<User> findUserAll = userRepository.findAll();
-
-		return UserMapper.toSimpleUserResponses(findUserAll);
 	}
 }

@@ -19,11 +19,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
 
-	public static SimpleUserRequest toUserSimpleRequest(Long userId) {
+	public static SimpleUserRequest toSimpleUserRequest(Long userId) {
 		return new SimpleUserRequest(userId);
 	}
 
-	public static SimpleUserResponse toUserSimpleResponse(User user) {
+	public static SimpleUserResponse toSimpleUserResponse(User user) {
 		return new SimpleUserResponse(
 			user.getId(),
 			user.getEmail(),

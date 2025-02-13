@@ -31,7 +31,7 @@ public class UserController {
 	// 유저 단건 조회
 	@GetMapping("/{userId}")
 	public ResponseEntity<SimpleUserResponse> getUser(@PathVariable("userId") Long userId) {
-		SimpleUserResponse response = userService.getUser(UserMapper.toUserSimpleRequest(userId));
+		SimpleUserResponse response = userService.getUser(UserMapper.toSimpleUserRequest(userId));
 
 		return ResponseEntity.ok(response);
 	}
