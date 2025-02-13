@@ -54,16 +54,19 @@ public class UserController {
 
 	// 유저 정보 업데이트
 	@PatchMapping("/{userId}")
-	public ResponseEntity<SimpleUserResponse> updateUser(@RequestBody UpdateUserRequest request) {
-		SimpleUserResponse response = userService.updateUser(request);
+	public ResponseEntity<SimpleUserResponse> updateUser(
+		@PathVariable("userId") Long userId,
+		@RequestBody UpdateUserRequest request) {
+		SimpleUserResponse response = userService.updateUser(userId, request);
 
 		return ResponseEntity.ok(response);
 	}
 
 	// 유저 삭제
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<DeleteUserResponse> updateUser(@RequestBody DeleteUserRequest request) {
-		DeleteUserResponse response = userService.deleteUser(request);
+	public ResponseEntity<DeleteUserResponse> updateUser(
+		@PathVariable("userId") Long userId) {
+		DeleteUserResponse response = userService.deleteUser(userId);
 
 		return ResponseEntity.ok(response);
 	}

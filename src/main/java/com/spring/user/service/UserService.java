@@ -50,10 +50,10 @@ public class UserService {
 	}
 
 	@Transactional
-	public SimpleUserResponse updateUser(UpdateUserRequest request) {
+	public SimpleUserResponse updateUser(Long userId, UpdateUserRequest request) {
 		validateEmail(request.email());
 
-		User findUser = findUser(request.userId());
+		User findUser = findUser(userId);
 
 		findUser.updateInfo(request.email(), request.name(), request.role());
 
@@ -61,8 +61,8 @@ public class UserService {
 	}
 
 	@Transactional
-	public DeleteUserResponse deleteUser(DeleteUserRequest request) {
-		User findUser = findUser(request.userId());
+	public DeleteUserResponse deleteUser(Long userId) {
+		User findUser = findUser(userId);
 
 		userRepository.delete(findUser);
 		return UserMapper.toDeleteUserResponse();
