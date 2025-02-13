@@ -5,6 +5,7 @@ import static jakarta.persistence.ConstraintMode.*;
 import com.spring.common.domain.TimeBaseEntity;
 import com.spring.user.domain.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
@@ -24,10 +25,13 @@ public class Post extends TimeBaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "post_id")
 	private Long id;
 
+	@Column(name = "title", nullable = false)
 	private String title;
 
+	@Column(name = "content", nullable = false)
 	private String content;
 
 	@ManyToOne(fetch = FetchType.LAZY)
