@@ -3,7 +3,9 @@ package com.spring.post.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.post.dto.PostMapper;
 import com.spring.post.dto.request.RegisterPostRequest;
+import com.spring.post.dto.request.UpdatePostRequest;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.service.PostService;
 
@@ -39,4 +42,15 @@ public class PostController {
 		SimplePostResponse response = postService.registerPost(request);
 		return ResponseEntity.ok(response);
 	}
+
+	@PatchMapping("/{postId}")
+	public ResponseEntity<SimplePostResponse> updatePost(
+		@PathVariable("postId") Long postId,
+		@RequestBody UpdatePostRequest request) {
+		SimplePostResponse response = postService.updatePost(postId, request);
+		return ResponseEntity.ok(response);
+	}
+
+
+
 }

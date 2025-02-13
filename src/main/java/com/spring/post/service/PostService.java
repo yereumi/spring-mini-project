@@ -10,6 +10,7 @@ import com.spring.post.domain.Post;
 import com.spring.post.dto.PostMapper;
 import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.request.RegisterPostRequest;
+import com.spring.post.dto.request.UpdatePostRequest;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.exception.PostErrorCode;
 import com.spring.post.repository.PostRepository;
@@ -49,9 +50,33 @@ public class PostService {
 		return PostMapper.toSimplePostResponse(savedPost, findUser.getName());
 	}
 
+	@Transactional
+	public SimplePostResponse updatePost(Long postId, UpdatePostRequest request) {
+		Post findPost = getPost(postId);
+		User author = findPost.getUser();		// fetch join으로 한 번에 가져올까 고민됨..
+
+		validateAuthor(author, request.userId());
+
+		findPost.updateInfo(request.title(), request.content());
+
+		return PostMapper.toSimplePostResponse(findPost, author.getName());
+	}
+
+	private void validateAuthor(User author, Long userId) {
+		if(author.getId() != userId) {		// equals 오버라이딩을 하고 싶은데 잘 못해서 패스..
+			throw new BaseException(PostErrorCode.POST_FORBIDDEN);
+		}
+	}
+
 	private User getUser(Long userId) {
 		return userRepository.findById(userId).orElseThrow(
 			() -> new BaseException(UserErrorCode.NOT_FOUND_USER)
+		);
+	}
+
+	private Post getPost(Long postId) {
+		return postRepository.findById(postId).orElseThrow(
+			() -> new BaseException(PostErrorCode.NOT_FOUND_POST)
 		);
 	}
 }

@@ -55,4 +55,9 @@ public class Post extends TimeBaseEntity {
 			.user(user)
 			.build();
 	}
+
+	public void updateInfo(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
 }
