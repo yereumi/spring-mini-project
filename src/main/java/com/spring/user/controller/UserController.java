@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.user.dto.request.DeleteUserRequest;
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.UpdateUserRequest;
 import com.spring.user.dto.response.DeleteUserResponse;
@@ -37,7 +36,7 @@ public class UserController {
 	}
 
 	// 유저 다건(전체) 조회
-	@GetMapping()
+	@GetMapping("/")
 	public ResponseEntity<List<SimpleUserResponse>> getUserAll() {
 		List<SimpleUserResponse> response = userService.getUserAll();
 
@@ -45,7 +44,7 @@ public class UserController {
 	}
 
 	// 유저 등록
-	@PostMapping()
+	@PostMapping("/")
 	public ResponseEntity<RegisterUserResponse> joinUser(@RequestBody RegisterUserRequest request) {
 		RegisterUserResponse response = userService.joinUser(request);
 

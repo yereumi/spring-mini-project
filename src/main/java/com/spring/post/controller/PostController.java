@@ -34,14 +34,14 @@ public class PostController {
 		return ResponseEntity.ok(response);
 	}
 
-	@GetMapping()
+	@GetMapping("/")
 	public ResponseEntity<List<SimplePostResponse>> getPostAll() {
 		List<SimplePostResponse> response = postService.getPostAll();
 
 		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping()
+	@PostMapping("/")
 	public ResponseEntity<SimplePostResponse> registerPost(@RequestBody RegisterPostRequest request) {
 		SimplePostResponse response = postService.registerPost(request);
 
