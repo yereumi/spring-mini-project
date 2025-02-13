@@ -28,6 +28,7 @@ public class UserController {
 
 	private final UserService userService;
 
+	// 유저 단건 조회
 	@GetMapping("/{userId}")
 	public ResponseEntity<SimpleUserResponse> getUser(@PathVariable("userId") Long userId) {
 		SimpleUserResponse response = userService.getUser(UserMapper.toUserSimpleRequest(userId));
@@ -35,6 +36,15 @@ public class UserController {
 		return ResponseEntity.ok(response);
 	}
 
+	// 유저 다건(전체) 조회
+	@GetMapping()
+	public ResponseEntity<List<SimpleUserResponse>> getUserAll() {
+		List<SimpleUserResponse> response = userService.getUserAll();
+
+		return ResponseEntity.ok(response);
+	}
+
+	// 유저 등록
 	@PostMapping()
 	public ResponseEntity<RegisterUserResponse> joinUser(@RequestBody RegisterUserRequest request) {
 		RegisterUserResponse response = userService.joinUser(request);
@@ -42,6 +52,7 @@ public class UserController {
 		return ResponseEntity.ok(response);
 	}
 
+	// 유저 정보 업데이트
 	@PatchMapping("/{userId}")
 	public ResponseEntity<SimpleUserResponse> updateUser(@RequestBody UpdateUserRequest request) {
 		SimpleUserResponse response = userService.updateUser(request);
@@ -49,16 +60,10 @@ public class UserController {
 		return ResponseEntity.ok(response);
 	}
 
+	// 유저 삭제
 	@DeleteMapping("/{userId}")
 	public ResponseEntity<DeleteUserResponse> updateUser(@RequestBody DeleteUserRequest request) {
 		DeleteUserResponse response = userService.deleteUser(request);
-
-		return ResponseEntity.ok(response);
-	}
-
-	@GetMapping()
-	public ResponseEntity<List<SimpleUserResponse>> getUserAll() {
-		List<SimpleUserResponse> response = userService.getUserAll();
 
 		return ResponseEntity.ok(response);
 	}
