@@ -4,9 +4,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.spring.user.domain.Role;
 import com.spring.user.dto.request.RegisterUserRequest;
-import com.spring.user.dto.request.UserSimpleRequest;
+import com.spring.user.dto.request.SimpleUserRequest;
+import com.spring.user.dto.response.DeleteUserResponse;
 import com.spring.user.dto.response.RegisterUserResponse;
-import com.spring.user.dto.response.UserSimpleResponse;
+import com.spring.user.dto.response.SimpleUserResponse;
 import com.spring.user.domain.User;
 
 import lombok.AccessLevel;
@@ -15,12 +16,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
 
-	public static UserSimpleRequest toUserSimpleRequest(Long userId) {
-		return new UserSimpleRequest(userId);
+	public static SimpleUserRequest toUserSimpleRequest(Long userId) {
+		return new SimpleUserRequest(userId);
 	}
 
-	public static UserSimpleResponse toUserSimpleResponse(User user) {
-		return new UserSimpleResponse(
+	public static SimpleUserResponse toUserSimpleResponse(User user) {
+		return new SimpleUserResponse(
 			user.getId(),
 			user.getEmail(),
 			user.getName(),
@@ -44,5 +45,9 @@ public class UserMapper {
 			savedUser.getName(),
 			savedUser.getRole().getRole()
 		);
+	}
+
+	public static DeleteUserResponse toDeleteUserResponse() {
+		return new DeleteUserResponse(true);
 	}
 }

@@ -1,6 +1,6 @@
 package com.spring.user.dto.request;
 
-public record UserSimpleRequest(
+public record DeleteUserRequest(
 	Long userId
 ) {
 }
