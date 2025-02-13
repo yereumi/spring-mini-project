@@ -1,5 +1,7 @@
 package com.spring.post.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,13 @@ public class PostService {
 			() -> new BaseException(PostErrorCode.NOT_FOUND_POST));
 
 		return PostMapper.toSimplePostResponse(post, post.getUser().getName());
+	}
+
+	@Transactional(readOnly = true)
+	public List<SimplePostResponse> getPostAll() {
+		List<Post> posts = postRepository.findAll();
+
+		return PostMapper.toSimplePostResponses(posts);
 	}
 
 	@Transactional

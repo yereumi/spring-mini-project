@@ -1,5 +1,7 @@
 package com.spring.post.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,12 @@ public class PostController {
 	@GetMapping("/{postId}")
 	public ResponseEntity<SimplePostResponse> getPost(@PathVariable("postId") Long postId) {
 		SimplePostResponse response = postService.getPost(PostMapper.toSimplePostRequest(postId));
+		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping()
+	public ResponseEntity<List<SimplePostResponse>> getPostAll() {
+		List<SimplePostResponse> response = postService.getPostAll();
 		return ResponseEntity.ok(response);
 	}
 

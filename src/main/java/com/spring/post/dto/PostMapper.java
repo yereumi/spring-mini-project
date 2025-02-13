@@ -1,5 +1,8 @@
 package com.spring.post.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.spring.post.domain.Post;
 import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.response.SimplePostResponse;
@@ -26,5 +29,20 @@ public class PostMapper {
 
 	public static Post toPost(String title, String content, User findUser) {
 		return Post.of(title, content, findUser);
+	}
+
+	public static List<SimplePostResponse> toSimplePostResponses(List<Post> posts) {
+		List<SimplePostResponse> response = new ArrayList<>();
+
+		posts.stream().forEach(
+			post -> response.add(new SimplePostResponse(
+				post.getId(),
+				post.getTitle(),
+				post.getContent(),
+				post.getUser().getName()
+			))
+		);
+
+		return response;
 	}
 }
