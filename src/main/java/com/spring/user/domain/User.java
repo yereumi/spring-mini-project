@@ -10,9 +10,11 @@ import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "UserEntity")
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends TimeBaseEntity {
 
 	@Id
