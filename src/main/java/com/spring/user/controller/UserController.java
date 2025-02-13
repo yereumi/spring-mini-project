@@ -1,5 +1,7 @@
 package com.spring.user.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,4 +54,12 @@ public class UserController {
 		DeleteUserResponse response = userService.deleteUser(request);
 
 		return ResponseEntity.ok(response);
-	}}
+	}
+
+	@GetMapping()
+	public ResponseEntity<List<SimpleUserResponse>> getUserAll() {
+		List<SimpleUserResponse> response = userService.getUserAll();
+
+		return ResponseEntity.ok(response);
+	}
+}

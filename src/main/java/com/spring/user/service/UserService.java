@@ -1,5 +1,7 @@
 package com.spring.user.service;
 
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,5 +71,11 @@ public class UserService {
 
 		userRepository.delete(findUser);
 		return UserMapper.toDeleteUserResponse();
+	}
+
+	public List<SimpleUserResponse> getUserAll() {
+		List<User> findUserAll = userRepository.findAll();
+
+		return UserMapper.toSimpleUserResponses(findUserAll);
 	}
 }

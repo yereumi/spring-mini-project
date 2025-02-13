@@ -1,5 +1,8 @@
 package com.spring.user.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.spring.user.domain.Role;
@@ -49,5 +52,19 @@ public class UserMapper {
 
 	public static DeleteUserResponse toDeleteUserResponse() {
 		return new DeleteUserResponse(true);
+	}
+
+	public static List<SimpleUserResponse> toSimpleUserResponses(List<User> findUserAll) {
+		List<SimpleUserResponse> response = new ArrayList<>();
+		findUserAll.stream().forEach(
+			findUser -> response.add(new SimpleUserResponse(
+				findUser.getId(),
+				findUser.getEmail(),
+				findUser.getName(),
+				findUser.getRole().getRole()
+			))
+		);
+
+		return response;
 	}
 }
