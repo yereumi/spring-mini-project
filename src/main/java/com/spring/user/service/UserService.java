@@ -35,6 +35,13 @@ public class UserService {
 		return UserMapper.toSimpleUserResponse(findUser);
 	}
 
+	@Transactional(readOnly = true)
+	public List<SimpleUserResponse> getUserAll() {
+		List<User> findUserAll = userRepository.findAll();
+
+		return UserMapper.toSimpleUserResponses(findUserAll);
+	}
+
 	@Transactional
 	public RegisterUserResponse joinUser(RegisterUserRequest request) {
 		User savedUser = userRepository.save(UserMapper.toUser(request, passwordEncoder));
@@ -59,13 +66,6 @@ public class UserService {
 
 		userRepository.delete(findUser);
 		return UserMapper.toDeleteUserResponse();
-	}
-
-	@Transactional(readOnly = true)
-	public List<SimpleUserResponse> getUserAll() {
-		List<User> findUserAll = userRepository.findAll();
-
-		return UserMapper.toSimpleUserResponses(findUserAll);
 	}
 
 	private User findUser(Long userId) {
