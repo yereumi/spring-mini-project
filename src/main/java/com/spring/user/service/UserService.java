@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.common.exception.runtime.BaseException;
 import com.spring.user.dto.request.RegisterUserRequest;
+import com.spring.user.dto.request.UpdateUserRequest;
 import com.spring.user.dto.request.UserSimpleRequest;
 import com.spring.user.dto.response.RegisterUserResponse;
 import com.spring.user.dto.response.UserSimpleResponse;
@@ -25,9 +26,7 @@ public class UserService {
 
 	@Transactional(readOnly = true)
 	public UserSimpleResponse getUser(UserSimpleRequest userSimpleRequest) {
-		User user = userRepository.findById(userSimpleRequest.userId()).orElseThrow(
-			() -> new BaseException(UserErrorCode.NOT_FOUND_USER)
-		);
+		User user = findUser(userSimpleRequest.userId());
 
 		return UserMapper.toUserSimpleResponse(user);
 	}
@@ -37,5 +36,28 @@ public class UserService {
 		User savedUser = userRepository.save(UserMapper.toUser(request, passwordEncoder));
 
 		return UserMapper.toRegisterUserResponse(savedUser);
+	}
+
+	@Transactional
+	public UserSimpleResponse updateUser(UpdateUserRequest request) {
+		validateEmail(request.email());
+
+		User findUser = findUser(request.userId());
+
+		findUser.updateInfo(request.email(), request.name(), request.role());
+
+		return UserMapper.toUserSimpleResponse(findUser);
+	}
+
+	private User findUser(Long userId) {
+		return userRepository.findById(userId).orElseThrow(
+			() -> new BaseException(UserErrorCode.NOT_FOUND_USER)
+		);
+	}
+
+	private void validateEmail(String changingEmail) {
+		if(userRepository.existsByEmail(changingEmail)) {
+			throw new BaseException(UserErrorCode.DUPLICATED_EMAIL);
+		}
 	}
 }

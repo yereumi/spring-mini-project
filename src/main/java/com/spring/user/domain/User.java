@@ -48,4 +48,10 @@ public class User extends TimeBaseEntity {
 			.role(role)
 			.build();
 	}
+
+	public void updateInfo(String email, String name, String role) {
+		this.email = email;
+		this.name = name;
+		this.role = Role.of(role);
+	}
 }
