@@ -22,7 +22,7 @@ public class PostController {
 
 	@GetMapping("/{postId}")
 	public ResponseEntity<SimplePostResponse> getPost(@PathVariable("postId") Long postId) {
-		SimplePostResponse response = postService.getPost(PostMapper.toPostSingleDto(postId));
+		SimplePostResponse response = postService.getPost(PostMapper.toSimplePostRequest(postId));
 		return ResponseEntity.ok(response);
 	}
 

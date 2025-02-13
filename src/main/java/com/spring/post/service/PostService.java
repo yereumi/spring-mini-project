@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.common.exception.runtime.BaseException;
 import com.spring.post.domain.Post;
 import com.spring.post.dto.PostMapper;
-import com.spring.post.dto.request.SimplePostDto;
+import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.request.RegisterPostRequest;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.exception.PostErrorCode;
@@ -25,11 +25,11 @@ public class PostService {
 	private final UserRepository userRepository;
 
 	@Transactional(readOnly = true)
-	public SimplePostResponse getPost(SimplePostDto postSingleDto) {
+	public SimplePostResponse getPost(SimplePostRequest postSingleDto) {
 		Post post = postRepository.findById(postSingleDto.postId()).orElseThrow(
 			() -> new BaseException(PostErrorCode.NOT_FOUND_POST));
 
-		return PostMapper.toPostSimpleResponse(post, post.getUser().getName());
+		return PostMapper.toSimplePostResponse(post, post.getUser().getName());
 	}
 
 	@Transactional
@@ -37,7 +37,7 @@ public class PostService {
 		User findUser = getUser(request.userId());
 		Post savedPost = postRepository.save(PostMapper.toPost(request.title(), request.content(), findUser));
 
-		return PostMapper.toPostSimpleResponse(savedPost, findUser.getName());
+		return PostMapper.toSimplePostResponse(savedPost, findUser.getName());
 	}
 
 	private User getUser(Long userId) {

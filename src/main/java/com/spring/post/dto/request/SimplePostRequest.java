@@ -1,6 +1,6 @@
 package com.spring.post.dto.request;
 
-public record SimplePostDto(
+public record SimplePostRequest(
 	Long postId
 ) {
 }

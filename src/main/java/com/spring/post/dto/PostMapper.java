@@ -1,7 +1,7 @@
 package com.spring.post.dto;
 
 import com.spring.post.domain.Post;
-import com.spring.post.dto.request.SimplePostDto;
+import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.user.domain.User;
 
@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostMapper {
 
-	public static SimplePostDto toPostSingleDto(Long postId) {
-		return new SimplePostDto(postId);
+	public static SimplePostRequest toSimplePostRequest(Long postId) {
+		return new SimplePostRequest(postId);
 	}
 
-	public static SimplePostResponse toPostSimpleResponse(Post post, String author) {
+	public static SimplePostResponse toSimplePostResponse(Post post, String author) {
 		return new SimplePostResponse(
 			post.getId(),
 			post.getTitle(),
