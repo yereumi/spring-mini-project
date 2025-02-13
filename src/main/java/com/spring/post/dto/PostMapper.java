@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.spring.post.domain.Post;
 import com.spring.post.dto.request.SimplePostRequest;
+import com.spring.post.dto.response.DeletePostResponse;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.user.domain.User;
 
@@ -44,5 +45,9 @@ public class PostMapper {
 		);
 
 		return response;
+	}
+
+	public static DeletePostResponse toDeletePostResponse() {
+		return new DeletePostResponse(true);
 	}
 }

@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.common.exception.runtime.BaseException;
 import com.spring.post.domain.Post;
 import com.spring.post.dto.PostMapper;
+import com.spring.post.dto.request.DeletePostRequest;
 import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.request.RegisterPostRequest;
 import com.spring.post.dto.request.UpdatePostRequest;
+import com.spring.post.dto.response.DeletePostResponse;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.exception.PostErrorCode;
 import com.spring.post.repository.PostRepository;
@@ -60,6 +62,17 @@ public class PostService {
 		findPost.updateInfo(request.title(), request.content());
 
 		return PostMapper.toSimplePostResponse(findPost, author.getName());
+	}
+
+	public DeletePostResponse deletePost(Long postId, DeletePostRequest request) {
+		Post findPost = getPost(postId);
+		User author = findPost.getUser();
+
+		validateAuthor(author, request.userId());
+
+		postRepository.delete(findPost);
+
+		return PostMapper.toDeletePostResponse();
 	}
 
 	private void validateAuthor(User author, Long userId) {
