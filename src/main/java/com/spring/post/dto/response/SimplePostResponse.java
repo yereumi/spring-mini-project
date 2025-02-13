@@ -1,6 +1,6 @@
 package com.spring.post.dto.response;
 
-public record PostSimpleResponse(
+public record SimplePostResponse(
 
 	Long postId,
 	String title,

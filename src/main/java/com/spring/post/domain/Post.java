@@ -15,10 +15,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "PostEntity")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Post extends TimeBaseEntity {
@@ -39,4 +40,19 @@ public class Post extends TimeBaseEntity {
 		nullable = false,
 		foreignKey = @ForeignKey(NO_CONSTRAINT))
 	private User user;
+
+	@Builder(access = AccessLevel.PRIVATE)
+	private Post(String title, String content, User user) {
+		this.title = title;
+		this.content = content;
+		this.user = user;
+	}
+
+	public static Post of(String title, String content, User user) {
+		return Post.builder()
+			.title(title)
+			.content(content)
+			.user(user)
+			.build();
+	}
 }
