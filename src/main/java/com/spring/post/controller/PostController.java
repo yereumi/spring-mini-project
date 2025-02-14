@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.post.dto.PostMapper;
@@ -21,7 +22,8 @@ import com.spring.post.service.PostService;
 
 import lombok.RequiredArgsConstructor;
 
-@RestController("/api/post")
+@RestController
+@RequestMapping("/api/post")
 @RequiredArgsConstructor
 public class PostController {
 
