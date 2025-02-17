@@ -39,6 +39,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,6 +54,16 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+      - name: Cache with Gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build with Gradle Wrapper
         run: |
@@ -66,14 +79,12 @@ jobs:
           echo "EC2_USERNAME: '${{ secrets.EC2_USERNAME }}'"
           echo "EC2_SSH_KEY length: $(echo "${{ secrets.EC2_SSH_KEY }}" | wc -c)"
 
-
       - name: Transfer Build File to EC2 via SCP
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_PORT }}
           source: cdtest.jar
           target: /home/ubuntu
 
