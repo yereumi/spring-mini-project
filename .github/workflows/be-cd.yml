@@ -79,5 +79,5 @@ jobs:
             sudo nohup java -jar cdtest.jar > ./output.log 2>&1 &
 #            백그라운드에서 cdtest.jar 실행 (nohup 사용)
 #            실행 로그를 output.log에 저장
-            mv output.log output_$(date +%Y%m%d-%H%M%S).log
+#            mv output.log output_$(date +%Y%m%d-%H%M%S).log
           debug: true
