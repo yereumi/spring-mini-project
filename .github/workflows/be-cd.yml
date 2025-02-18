@@ -42,7 +42,7 @@ jobs:
           ./gradlew test
 
       - name: Rename Build File # 빌드된 JAR 파일 이름 변경
-        run: mv $(ls ./build/libs/*.jar | head -n 1) ./cdtest.jar
+        run: mv $(find ./build/libs -name "*.jar" | head -n 1) ./cdtest.jar
 
 #      - name: Debug Secrets # Secrets 디버깅
 #        run: |
@@ -76,8 +76,9 @@ jobs:
 #            8080 포트에서 실행 중인 프로세스 종료
 #            || true → 프로세스가 없더라도 스크립트가 중단되지 않도록 설정
             cd /home/ubuntu
-            sudo nohup java -jar cdtest.jar > ./output.log 2>&1 &
+            sudo nohup java -jar cdtest.jar > output.log 2>&1 &
+            sleep 2  # 실행 안정성을 위해 2초 대기
+            mv output.log output_$(date +%Y%m%d-%H%M%S).log
 #            백그라운드에서 cdtest.jar 실행 (nohup 사용)
 #            실행 로그를 output.log에 저장
 #            mv output.log output_$(date +%Y%m%d-%H%M%S).log
-          debug: true
